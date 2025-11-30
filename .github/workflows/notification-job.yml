@@ -11,7 +11,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  run:
+    environment: 'prod'
 
     runs-on: ubuntu-latest
 

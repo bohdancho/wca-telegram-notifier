@@ -99,7 +99,7 @@ async def find_new_competitions() -> List[Competition]:
 
     new_comps: List[Competition] = []
     # can't use today because then we might miss comps that were announced after the script has run on the same day
-    yesterday = datetime.now() + timedelta(days=-19)  # TODO: change -19 (test) to -1
+    yesterday = datetime.now() + timedelta(days=-1)
     for comp in all_raw_comps:
         announced_at = datetime.fromisoformat(comp.get("announced_at"))
         if (

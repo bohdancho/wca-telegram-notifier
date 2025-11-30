@@ -21,10 +21,9 @@ load_dotenv()
 
 TELEGRAM_API_TOKEN = cast(str, os.getenv("TELEGRAM_API_TOKEN"))
 TELEGRAM_USER_ID = cast(str, os.getenv("TELEGRAM_USER_ID"))
-HOME_CITY = cast(str, os.getenv("HOME_ADDRESS"))
+HOME_CITY = cast(str, os.getenv("HOME_CITY"))
 COUNTRY_FILTER = cast(str, os.getenv("COUNTRY_FILTER"))
 
-print(COUNTRY_FILTER)
 if (
     not TELEGRAM_API_TOKEN
     or not TELEGRAM_USER_ID

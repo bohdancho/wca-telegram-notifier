@@ -28,3 +28,8 @@ jobs:
     - name: Run
       run: |
         python bot.py
+      env:
+        TELEGRAM_API_TOKEN: ${{ secrets.TELEGRAM_API_TOKEN }}
+        TELEGRAM_USER_ID: ${{ vars.TELEGRAM_USER_ID }}
+        HOME_CITY: ${{ vars.HOME_CITY }}
+        COUNTRY_FILTER: ${{ vars.COUNTRY_FILTER }}

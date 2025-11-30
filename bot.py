@@ -21,13 +21,13 @@ load_dotenv()
 
 TELEGRAM_API_TOKEN = cast(str, os.getenv("TELEGRAM_API_TOKEN"))
 TELEGRAM_USER_ID = cast(str, os.getenv("TELEGRAM_USER_ID"))
-HOME_ADDRESS = cast(str, os.getenv("HOME_ADDRESS"))
+HOME_CITY = cast(str, os.getenv("HOME_ADDRESS"))
 COUNTRY_FILTER = cast(str, os.getenv("COUNTRY_FILTER"))
 
 if (
     not TELEGRAM_API_TOKEN
     or not TELEGRAM_USER_ID
-    or not HOME_ADDRESS
+    or not HOME_CITY
     or not COUNTRY_FILTER
 ):
     raise Exception("Invalid env variables")
@@ -50,6 +50,7 @@ async def main() -> None:
 
     new_competitions = await find_new_competitions()
     if not new_competitions:
+        print("no new competitions")
         return
 
     message = f"There are new competitions:\n\n"
@@ -73,7 +74,7 @@ async def main() -> None:
 async def get_distance(comp: Competition) -> str:
     try:
         geolocator = geopy.Nominatim(user_agent="wca_competitions_notifier")
-        home = geolocator.geocode(HOME_ADDRESS)
+        home = geolocator.geocode(HOME_CITY)
         target = geolocator.reverse(
             f"{comp.latitude_degrees}, {comp.longitude_degrees}"
         )
@@ -89,6 +90,7 @@ async def get_distance(comp: Competition) -> str:
 async def find_new_competitions() -> List[Competition]:
     all_raw_comps = []
     # TODO: parallelize
+    # NOTE: just the last 3 pages are not ideal. a clean soultion would be to parse until we reach comps that already took place
     for page in range(1, 4):
         res = requests.get(
             f"https://www.worldcubeassociation.org/api/v0/competitions?country_iso2={COUNTRY_FILTER}&page={page}"

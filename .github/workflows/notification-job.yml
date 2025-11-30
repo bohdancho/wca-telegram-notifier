@@ -4,6 +4,7 @@
 name: Notification job
 
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "0 19 * * *"
